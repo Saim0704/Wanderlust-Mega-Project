@@ -48,7 +48,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 dir('frontend') {
-                    docker_push("${env.CREDENTIALS_ID}", "${env.DOCKER_USER_NAME}/${env.REPO_NAME}", "${env.BUILD_ID}")
+                    docker_push("${env.DOCKER_CRED_ID}", "${env.DOCKER_USER_NAME}/${env.REPO_NAME}", "${env.BUILD_ID}")
                 }
             }
         }
