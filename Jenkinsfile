@@ -2,14 +2,21 @@
 pipeline {
     agent any
     environment {
+    // GIT
         GIT_REPO_URL = "https://github.com/Saim0704/Wanderlust-Mega-Project.git"
         GIT_BRANCH = "main"
         DOCKER_USER_NAME = "saim0704"
         REPO_NAME = "wanderlust"
+    // Sonar_Qube
         SCANNER_HOME=tool "sonar"
         SONARQUBE_SERVER = "sonar"
+        SONAR_TOKEN = "sonar-scanner-token"
         PROJECT_NAME = "Wanderlust-Frontend"
         PROJECT_KEY = "Wanderlust-Frontend"
+    // Docker
+        DOCKER_CRED_ID = ""
+        DOCKER_USER_NAME = ""
+
     }
 
     stages {
@@ -22,7 +29,6 @@ pipeline {
         }
         stage('Sonar Scanner') {
             steps {
-                echo 'Sonar Scanner Stage'
                 dir('frontend'){
                     sonar_scanner("${env.SONARQUBE_SERVER}", "${env.PROJECT_NAME}", "${env.PROJECT_KEY}")
                 }
@@ -31,6 +37,7 @@ pipeline {
         stage('Quality Gate') {
             steps {
                 echo 'Quality Gate Stage'
+                quality_gate("${env.SONAR_TOKEN}")
             }
         }
         stage('Image Build') {
