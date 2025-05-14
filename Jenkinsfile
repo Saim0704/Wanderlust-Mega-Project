@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                scripts{
+                script{
                     git_checkout("https://github.com/Saim0704/Wanderlust-Mega-Project.git", "main")
                 }
             }
