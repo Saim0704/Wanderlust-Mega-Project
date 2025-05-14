@@ -23,6 +23,7 @@ pipeline {
         stage('Image Build') {
             steps {
                 echo 'Build Stage'
+                docker_build("saim0704", "wanderlust", "${env.BUILD_ID}")
             }
         }
     }
