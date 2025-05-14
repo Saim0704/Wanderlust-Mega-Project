@@ -1,18 +1,27 @@
 @Library('shared') _
 pipeline {
     agent any
+    environments{
+        GIT_REPO_URL = "https://github.com/Saim0704/Wanderlust-Mega-Project.git"
+        GIT_BRANCH = "main"
+        DOCKER_USER_NAME = "saim0704"
+        REPO_NAME = "wanderlust"
+    }
 
     stages {
         stage('Clone') {
             steps {
                 script{
-                    git_checkout("https://github.com/Saim0704/Wanderlust-Mega-Project.git", "main")
+                    git_checkout("${env.GIT_REPO_URL}", "${env.BRANCH}")
                 }
             }
         }
         stage('Sonar Scanner') {
             steps {
                 echo 'Sonar Scanner Stage'
+                // script{
+                //     sonar_scanner()
+                // }
             }
         }
         stage('Quality Gate') {
@@ -22,9 +31,9 @@ pipeline {
         }
         stage('Image Build') {
             steps {
-                echo 'Build Stage'
-                sh "whoami"
-                docker_build("saim0704", "wanderlust", "${env.BUILD_ID}")
+                dir('frontend') {
+                    docker_build("${env.DOCKER_USER_NAME}", "${env.REPO_NAME}", "${env.BUILD_ID}")
+                }
             }
         }
     }
