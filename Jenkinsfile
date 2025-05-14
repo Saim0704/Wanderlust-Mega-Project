@@ -6,6 +6,10 @@ pipeline {
         GIT_BRANCH = "main"
         DOCKER_USER_NAME = "saim0704"
         REPO_NAME = "wanderlust"
+        SCANNER_HOME=tool "sonar"
+        SONARQUBE_SERVER = "sonar"
+        PROJECT_NAME = "Wanderlust-Frontend"
+        PROJECT_KEY = "Wanderlust-Frontend"
     }
 
     stages {
@@ -19,9 +23,9 @@ pipeline {
         stage('Sonar Scanner') {
             steps {
                 echo 'Sonar Scanner Stage'
-                // script{
-                //     sonar_scanner()
-                // }
+                dir('frontend'){
+                    sonar_scanner("${env.SONARQUBE_SERVER}", "${env.PROJECT_NAME}", "${env.PROJECT_KEY}")
+                }
             }
         }
         stage('Quality Gate') {
@@ -33,6 +37,13 @@ pipeline {
             steps {
                 dir('frontend') {
                     docker_build("${env.DOCKER_USER_NAME}", "${env.REPO_NAME}", "${env.BUILD_ID}")
+                }
+            }
+        }
+        stage('Push to Docker Hub') {
+            steps {
+                dir('frontend') {
+                    docker_push("${env.CREDENTIALS_ID}", "${env.DOCKER_USER_NAME}/${env.REPO_NAME}", "${env.BUILD_ID}")
                 }
             }
         }
