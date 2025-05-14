@@ -5,7 +5,9 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git_checkout("https://github.com/Saim0704/Wanderlust-Mega-Project.git", "main")
+                scripts{
+                    git_checkout("https://github.com/Saim0704/Wanderlust-Mega-Project.git", "main")
+                }
             }
         }
         stage('Sonar Scanner') {
