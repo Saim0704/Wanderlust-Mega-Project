@@ -53,4 +53,12 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            cleanWs()
+            script {
+                sh "echo 'y' | docker system prune -a"
+            }
+        }
+    }
 }
