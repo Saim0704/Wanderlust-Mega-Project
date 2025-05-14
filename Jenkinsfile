@@ -12,7 +12,7 @@ pipeline {
         stage('Clone') {
             steps {
                 script{
-                    git_checkout("${env.GIT_REPO_URL}", "${env.BRANCH}")
+                    git_checkout("${env.GIT_REPO_URL}", "${env.GIT_BRANCH}")
                 }
             }
         }
