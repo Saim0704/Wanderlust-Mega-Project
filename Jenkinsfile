@@ -23,6 +23,7 @@ pipeline {
         stage('Image Build') {
             steps {
                 echo 'Build Stage'
+                sh "whoami"
                 docker_build("saim0704", "wanderlust", "${env.BUILD_ID}")
             }
         }
