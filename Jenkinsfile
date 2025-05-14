@@ -14,9 +14,7 @@ pipeline {
         PROJECT_NAME = "Wanderlust-Frontend"
         PROJECT_KEY = "Wanderlust-Frontend"
     // Docker
-        DOCKER_CRED_ID = ""
-        DOCKER_USER_NAME = ""
-
+        DOCKER_CRED_ID = "docker_token"
     }
 
     stages {
