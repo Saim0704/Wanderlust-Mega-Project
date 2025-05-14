@@ -1,7 +1,7 @@
 @Library('shared') _
 pipeline {
     agent any
-    environments{
+    environment {
         GIT_REPO_URL = "https://github.com/Saim0704/Wanderlust-Mega-Project.git"
         GIT_BRANCH = "main"
         DOCKER_USER_NAME = "saim0704"
