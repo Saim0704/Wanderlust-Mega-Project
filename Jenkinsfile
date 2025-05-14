@@ -1,10 +1,11 @@
+@Library('Shared') _
 pipeline {
     agent any
 
     stages {
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/Saim0704/Wanderlust-Mega-Project.git'
+                git_checkout("https://github.com/Saim0704/Wanderlust-Mega-Project.git", "main")
             }
         }
         stage('Sonar Scanner') {
