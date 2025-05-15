@@ -42,14 +42,14 @@ pipeline {
         stage('Image Build') {
             steps {
                 dir("${env.TYPE}") {
-                    docker_build("${env.DOCKER_USER_NAME}", "${env.REPO_NAME}", "${env.BUILD_ID}")
+                    docker_build("${env.DOCKER_USER_NAME}", "${env.REPO_NAME}", "${env.BUILD_NUMBER}")
                 }
             }
         }
         stage('Push to Docker Hub') {
             steps {
                 dir("${env.TYPE}") {
-                    docker_push("${env.DOCKER_CRED_ID}", "${env.DOCKER_USER_NAME}/${env.REPO_NAME}", "${env.BUILD_ID}")
+                    docker_push("${env.DOCKER_CRED_ID}", "${env.DOCKER_USER_NAME}/${env.REPO_NAME}", "${env.BUILD_NUMBER}")
                 }
             }
         }
@@ -62,8 +62,9 @@ pipeline {
             }
         }
         success{
+            echo "Triggering CD with IMAGE_TAG=${env.BUILD_NUMBER}"
             build job: 'Upyogi-Frontend-CD', parameters: [
-                string(name: 'IMAGE_TAG', value: "${env.BUILD_ID}")
+                string(name: 'IMAGE_TAG', value: "${env.BUILD_NUMBER}")
                 ]
         }
     }
