@@ -64,7 +64,7 @@ pipeline {
         success{
             echo "Triggering CD with IMAGE_TAG=${env.BUILD_NUMBER}"
             build job: 'Upyogi-Frontend-CD', parameters: [
-                string(name: 'IMAGE_TAG', value: "test-123")
+                string(name: 'IMAGE_TAG', value: "${env.BUILD_NUMBER}")
                 ]
         }
     }
